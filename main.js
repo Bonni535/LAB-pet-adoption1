@@ -240,3 +240,52 @@ const pets = [
       imageUrl: "http://lsae2.iypcdn.com/static//modules/uploads/photos/language1/dino-live-22.jpg?119"
     }
   ];
+
+  const renderToDom = (divId, html) => {
+    const targetedDiv = document.querySelector(divId)
+    targetedDiv.innerHTML = html
+  }
+
+  const app = document.querySelector("#app")
+
+  const cardsOnDom = (array) => {
+
+  let domString = ""
+
+  for (const pet of array) {
+    domString += `
+    <div class="card" style="width: 18rem;">
+        <img src="${pet.imageUrl}" class="card-img-top" alt="pet-pic">
+        <div class="card-body">
+          <h5 class="card-title">${pet.name}</h5>
+          <p class="card-text">Color: ${pet.color}   Special skill: ${pet.specialSkill}</p>
+          <p class="card-text"> ${pet.type}</p>
+          <a href="#" class="btn btn-primary"></a>
+        </div>
+      </div>`
+  }
+  renderToDom("#app", domString);
+}
+
+cardsOnDom(pets);
+
+  const filterContainer = document.querySelector("#filter-container")
+
+  filterContainer.addEventListener("click", (e) => {
+    if (e.target.id === "cats-btn") {
+      const catPets = pets.filter((pet) => pet.type === "Cats")
+      cardsOnDom(catPets);
+    }
+    if (e.target.id === "dogs-btn") {
+      const dogPets = pets.filter((pet) => pet.type === "Dogs")
+      cardsOnDom(dogPets);
+    }
+    if (e.target.id === "dinos-btn") {
+      const dinoPets = pets.filter((pet) => pet.type === "Dinos")
+      cardsOnDom(dinoPets);
+    }
+    if (e.target.id === "all-pets-btn") {
+      const allPets = pets.filter((pet) => pet.type === "All Pets")
+      cardsOnDom(allPets);
+    }
+  })
