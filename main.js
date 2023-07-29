@@ -260,7 +260,7 @@ const pets = [
           <h5 class="card-title">${pet.name}</h5>
           <p class="card-text">Color: ${pet.color}   Special skill: ${pet.specialSkill}</p>
           <p class="card-text"> ${pet.type}</p>
-          <a href="#" class="btn btn-primary"></a>
+          <button class="btn btn-danger" id="delete--${pet.id}">Delete</button>
         </div>
       </div>`
   }
@@ -289,3 +289,51 @@ cardsOnDom(pets);
       cardsOnDom(allPets);
     }
   })
+
+  const form = document.querySelector('form');
+
+
+const createPet =  (e) =>{
+
+e.preventDefault();
+
+const newPetObj = {
+
+  id: pets.length + 1,
+  name: document.querySelector('#name').value,
+  color: document.querySelector('#color').value,
+  specialSkill: document.querySelector('#specialSkill').value,
+  type: document.querySelector('#type').value,
+  imageUrl: document.querySelector('#image').value,
+
+}
+
+pets.push(newPetObj);
+cardsOnDom(pets);
+form.reset();
+}
+
+form.addEventListener('submit' , createPet);
+
+app.addEventListener('click', (e) => {
+    
+  if (e.target.id.includes("delete")) {
+    const[, id] = e.target.id.split("--");
+
+    const index = pets.findIndex(e => e.id === Number(id));
+
+    pets.splice(index, 1);
+
+    cardsOnDom(pets);
+
+  }
+
+})
+
+
+
+const startApp = () => {
+  cardsOnDom(pets);
+}
+
+startApp();
